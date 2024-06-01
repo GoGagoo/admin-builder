@@ -10,7 +10,7 @@ type TextField = {
 }
 
 type SelectField = {
-	type: "text"
+	type: "select"
 	name: string
 	title: string
 	options: Options[]
