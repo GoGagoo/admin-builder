@@ -1,6 +1,6 @@
 import { createModule } from 'tiny-invert'
 import { AdminEntityBuilderContainer } from './_container'
-import { EntityPageProvider } from './entity_provider'
+import { EntityPageProvider } from './_entity-page'
 
 export type { AdminBuilderField, AdminEntityConfig } from './_types.ts'
 
