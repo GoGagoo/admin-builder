@@ -1,7 +1,8 @@
-import { EntityBuilder } from '@/admin-builder/entity-builder'
+import { dbClient } from '@/shared/db-client';
 import { entityConfig } from './config'
-import { EntitySchemaBuilder } from '@/admin-builder/entity-schema-builder'
+import { EntityDbBuilder } from '@/admin-builder/db'
 
-export const UserSchemaEntity = EntitySchemaBuilder.init({
-	config: entityConfig
+export const userDb = EntityDbBuilder.init({
+	config: entityConfig,
+	dbClient
 })
