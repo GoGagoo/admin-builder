@@ -1,6 +1,6 @@
 import { Sql } from 'postgres'
 import { createContainer, mergeContainers } from 'tiny-invert'
-import { AdminEntityConfig } from './_types'
+import { AdminBuilderAction, AdminEntityConfig } from './_types'
 
 export const DbClientContainer = createContainer<{
 	dbClient: Sql
@@ -33,5 +33,5 @@ export const AdminActionEntityBuilderContainer = mergeContainers([
 export const AdminClientEntityBuilderContainer = mergeContainers([
 	ConfigContainer
 ]).extend<{
-	action: () => Promise<unknown>
+	action: AdminBuilderAction
 }>('AdminClientEntityBuilderContainer')

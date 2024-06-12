@@ -7,22 +7,35 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { GetEntitiesResult } from './_types'
+import { Button } from '@/components/ui/button'
 
 
 export const EntityCardProvider = AdminClientEntityBuilderContainer.provider(
-	(ctx) => {
-		return function EntityCard({}: {}) {
+	({deps: {config, action}}) => {
+		return function EntityCard({entity}: {
+			entity: GetEntitiesResult
+		}) {
 			return (
 				<Card>
 					<CardHeader>
-						<CardTitle>Card Title</CardTitle>
+						<CardTitle>ID: {entity.id}</CardTitle>
 						<CardDescription>Card Description</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<p>Card Content</p>
+						{Object.entries(entity).map(([key, value]) => {
+							if (!config.fields.find((field) => field.name === key)) {
+								return null
+							}
+
+							return (
+								<div key={key}>{key}: {String(value)}</div>
+							)
+						})}
 					</CardContent>
-					<CardFooter>
-						<p>Card Footer</p>
+					<CardFooter className='justify-end gap-3'>
+						<Button>Edit</Button>
+						<Button variant='destructive'>Delete</Button>
 					</CardFooter>
 				</Card>
 			)

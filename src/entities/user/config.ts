@@ -17,6 +17,10 @@ export const entityConfig: AdminEntityConfig = {
 				{
 					label: "Admin",
 					value: "admin"
+				},
+				{
+					label: "User",
+					value: "user"
 				}
 			]
 		}

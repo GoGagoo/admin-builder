@@ -19,7 +19,8 @@ type SelectField = {
 export type CreateEntitiesParams = {
 	type: 'create'
 	data: {
-		[key: string]: string | number | boolean	
+		[key: string]: string | number | boolean | null | Date
+
 	}
 }
 
@@ -33,7 +34,7 @@ export type UpdateEntitiesParams = {
 	type: 'update'
 	id: number
 	data: {
-		[key: string]: string | number | boolean	
+		[key: string]: string | number | boolean | null | Date
 	}
 }
 
