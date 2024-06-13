@@ -18,12 +18,16 @@ export const EntityPageProvider = AdminClientEntityBuilderContainer.provider(
 			const [entities, setEntities] = useState<GetEntitiesResult[]>([])
 			const [isLoading, startTransition] = useTransition()
 
-			useEffect(() => {
+			const fetch = async () => {
 				startTransition(async () => {
 					await action({ type: 'get' }).then((res) => {
 						if (res) setEntities(res)
 					})
 				})
+			}
+
+			useEffect(() => {
+				fetch()
 			}, [])
 
 			return (
@@ -38,15 +42,14 @@ export const EntityPageProvider = AdminClientEntityBuilderContainer.provider(
 								<DialogHeader>
 									<DialogTitle>Create {config.title}</DialogTitle>
 								</DialogHeader>
-								<UpsertEntityForm />
+								<UpsertEntityForm onSuccess={() => fetch()} />
 							</DialogContent>
 						</Dialog>
 					</div>
 
 					<div className='grid grid-cols-3 gap-3'>
-						{isLoading && <p>Loading...</p>}
 						{entities.map((entity) => (
-							<EntityCard key={entity.id} entity={entity} />
+							<EntityCard key={entity.id} entity={entity} onDelete={() => fetch()} />
 						))}
 					</div>
 				</div>

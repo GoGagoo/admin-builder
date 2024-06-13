@@ -1,21 +1,27 @@
-import { AdminClientEntityBuilderContainer } from './_container'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { GetEntitiesResult } from './_types'
 import { Button } from '@/components/ui/button'
-
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from '@/components/ui/card'
+import { useTransition } from 'react'
+import { AdminClientEntityBuilderContainer } from './_container'
+import { GetEntitiesResult } from './_types'
 
 export const EntityCardProvider = AdminClientEntityBuilderContainer.provider(
-	({deps: {config, action}}) => {
-		return function EntityCard({entity}: {
+	({ deps: { config, action } }) => {
+		return function EntityCard({
+			entity,
+			onDelete,
+		}: {
 			entity: GetEntitiesResult
+			onDelete?: () => void
 		}) {
+			const [isLoading, startTransition] = useTransition()
+
 			return (
 				<Card>
 					<CardHeader>
@@ -29,13 +35,23 @@ export const EntityCardProvider = AdminClientEntityBuilderContainer.provider(
 							}
 
 							return (
-								<div key={key}>{key}: {String(value)}</div>
+								<div key={key}>
+									{key}: {String(value)}
+								</div>
 							)
 						})}
 					</CardContent>
 					<CardFooter className='justify-end gap-3'>
 						<Button>Edit</Button>
-						<Button variant='destructive'>Delete</Button>
+						<Button
+							variant='destructive'
+							onClick={() => startTransition(async () => {
+								await action({ type: 'delete', id: entity.id })
+								onDelete?.()
+							})}
+						>
+							Delete
+						</Button>
 					</CardFooter>
 				</Card>
 			)
